@@ -1,5 +1,7 @@
 # Restify Jwt Community
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/frbuceta/restify-jwt-community.svg)](https://greenkeeper.io/)
+
 [Restify](http://restify.com/) middleware that validates JsonWebTokens and sets `req.user`.
 
 This module lets you authenticate HTTP requests using JWT tokens in your restify applications.
