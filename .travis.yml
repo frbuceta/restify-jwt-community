@@ -10,6 +10,7 @@ node_js:
 branches:
   only:
     - master
+    - /^greenkeeper/.*$/
 script:
   - npm run test
 after_success:
