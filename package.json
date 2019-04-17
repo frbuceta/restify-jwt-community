@@ -82,7 +82,7 @@
   "devDependencies": {
     "@types/restify-errors": "^4.3.3",
     "jest": "^24.7.1",
-    "restify": "^8.2.0"
+    "restify": "^8.3.0"
   },
   "peerDependencies": {
     "restify": "5.x || 6.x || 7.x || 8.x",
