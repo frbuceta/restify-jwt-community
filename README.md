@@ -42,7 +42,7 @@ This module lets you authenticate HTTP requests using JWT tokens in your restify
 
 * Based on [auth0/express-jwt](https://github.com/auth0/express-jwt). The major difference is that restify-jwt tries to use built in restify errors wherever possible.
 * Also, based on [amrav/restify-jwt](https://github.com/amrav/restify-jwt). The official repo.
-* Thanks to all those people who help [Contributors](https://github.com/frbuceta/restify-jwt-community/graphs/contributors)
+* Thanks to all those people who help [Contributors](https://github.com/frbuceta/restify-jwt-community/graphs/contributors).
 
 ## License
 
