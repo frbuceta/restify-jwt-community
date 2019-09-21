@@ -1,0 +1,27 @@
+title: Restify JWT
+description: Restify middleware that validates a JsonWebToken
+#base_url:
+#url:
+#permalink:
+exclude: ["Gemfile", "Gemfile.lock"]
+#logo:
+search_enabled: false
+search_tokenizer_separator: /[\s/]+/
+heading_anchors: true
+
+aux_links:
+  "Restify JWT Community on GitHub":
+    - "//github.com/frbuceta/restify-jwt-community"
+
+color_scheme: dark
+remote_theme: pmarsceill/just-the-docs
+
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  startings: []
+  blanklines: true
+  profile: false
+
+footer_content: "Copyright &copy; 2017-2019 <a href=\"http://frbuceta.com\" target=\"_blank\">Francisco Buceta</a>. Distributed by an <a href=\"https://github.com/frbuceta/restify-jwt-community/tree/master/LICENSE\" target=\"_blank\">MIT license.</a>"

@@ -1,4 +1,11 @@
-## Usage
+---
+layout: default
+title: Usage
+nav_order: 2
+permalink: /usage
+---
+
+# Usage
 
 The JWT authentication middleware authenticates callers using a JWT.
 If the token is valid, `req.user` will be set with the JSON object decoded
@@ -6,11 +13,11 @@ to be used by later middleware for authorization and access control.
 
 For example,
 
-```javascript
-var jwt = require('restify-jwt-community');
+```js
+const rJWT = require('restify-jwt-community');
 
 app.get('/protected',
-  jwt({secret: 'shhhhhhared-secret'}),
+  rJWT({secret: 'shhhhhhared-secret'}),
   function(req, res) {
     if (!req.user.admin) return res.send(401);
     res.send(200);
@@ -19,8 +26,8 @@ app.get('/protected',
 
 You can specify audience and/or issuer as well:
 
-```javascript
-jwt({ secret: 'shhhhhhared-secret',
+```js
+rJWT({ secret: 'shhhhhhared-secret',
   audience: 'http://myapi/protected',
   issuer: 'http://issuer' })
 ```
@@ -29,14 +36,14 @@ jwt({ secret: 'shhhhhhared-secret',
 
 If you are using a base64 URL-encoded secret, pass a `Buffer` with `base64` encoding as the secret instead of a string:
 
-```javascript
-jwt({ secret: new Buffer('shhhhhhared-secret', 'base64') })
+```js
+rJWT({ secret: new Buffer('shhhhhhared-secret', 'base64') })
 ```
 
 Optionally you can make some paths unprotected as follows:
 
-```javascript
-app.use(jwt({ secret: 'shhhhhhared-secret'}).unless({path: ['/token']}));
+```js
+app.use(rJWT({ secret: 'shhhhhhared-secret'}).unless({path: ['/token']}));
 ```
 
 This is especially useful when applying to multiple routes. In the example above, `path` can be a string, a regexp, or an array of any of those.
@@ -45,16 +52,17 @@ This is especially useful when applying to multiple routes. In the example above
 
 This module also support tokens signed with public/private key pairs. Instead of a secret, you can specify a Buffer with the public key
 
-```javascript
-var publicKey = fs.readFileSync('/pat/to/public.pub');
-jwt({ secret: publicKey });
+```js
+const publicKey = fs.readFileSync('/pat/to/public.pub');
+
+rJWT({ secret: publicKey });
 ```
 
 By default, the decoded token is attached to `req.user` but can be configured with the `requestProperty` option.
 
 
-```javascript
-jwt({ secret: publicKey, requestProperty: 'auth' });
+```js
+rJWT({ secret: publicKey, requestProperty: 'auth' });
 ```
 
 A custom function for extracting the token from a request can be specified with
@@ -62,8 +70,8 @@ the `getToken` option. This is useful if you need to pass the token through a
 query parameter or a cookie. You can throw an error in this function and it will
 be handled by `restify-jwt-community`.
 
-```javascript
-app.use(jwt({
+```js
+app.use(rJWT({
   secret: 'hello world !',
   credentialsRequired: false,
   getToken: function fromHeaderOrQuerystring (req) {
@@ -86,25 +94,25 @@ If you are developing an application in which the secret used to sign tokens is 
   * `secret` (`String`) - The secret to use to verify the JWT.
 
 For example, if the secret varies based on the [JWT issuer](http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#issDef):
-```javascript
-var jwt = require('restify-jwt-community');
-var data = require('./data');
-var utilities = require('./utilities');
+```js
+const rJWT = require('restify-jwt-community');
+const data = require('./data');
+const utilities = require('./utilities');
 
-var secretCallback = function(req, payload, done){
-  var issuer = payload.iss;
+const secretCallback = function(req, payload, done){
+  const issuer = payload.iss;
 
   data.getTenantByIdentifier(issuer, function(err, tenant){
     if (err) { return done(err); }
     if (!tenant) { return done(new Error('missing_secret')); }
 
-    var secret = utilities.decrypt(tenant.secret);
+    const secret = utilities.decrypt(tenant.secret);
     done(null, secret);
   });
 };
 
 app.get('/protected',
-  jwt({secret: secretCallback}),
+  rJWT({secret: secretCallback}),
   function(req, res) {
     if (!req.user.admin) return res.send(401);
     res.send(200);
@@ -120,14 +128,14 @@ It is possible that some tokens will need to be revoked so they cannot be used a
   * `revoked` (`Boolean`) - `true` if the JWT is revoked, `false` otherwise.
 
 For example, if the `(iss, jti)` claim pair is used to identify a JWT:
-```javascript
-var jwt = require('restify-jwt-community');
-var data = require('./data');
-var utilities = require('./utilities');
+```js
+const rJWT = require('restify-jwt-community');
+const data = require('./data');
+const utilities = require('./utilities');
 
-var isRevokedCallback = function(req, payload, done){
-  var issuer = payload.iss;
-  var tokenId = payload.jti;
+const isRevokedCallback = function(req, payload, done){
+  const issuer = payload.iss;
+  const tokenId = payload.jti;
 
   data.getRevokedToken(issuer, tokenId, function(err, token){
     if (err) { return done(err); }
@@ -136,8 +144,7 @@ var isRevokedCallback = function(req, payload, done){
 };
 
 app.get('/protected',
-  jwt({secret: shhhhhhared-secret,
-    isRevoked: isRevokedCallback}),
+  rJWT({secret: 'shhhhhhared-secret', isRevoked: isRevokedCallback}),
   function(req, res) {
     if (!req.user.admin) return res.send(401);
     res.send(200);
@@ -149,7 +156,7 @@ app.get('/protected',
 The default behavior is to throw an error when the token is invalid, so you can add your custom logic to manage unauthorized access as follows:
 
 
-```javascript
+```js
 app.use(function (err, req, res, next) {
   if (err.name === 'UnauthorizedError') {
     res.send(401, 'invalid token...');
@@ -160,7 +167,9 @@ app.use(function (err, req, res, next) {
 You might want to use this module to identify registered users without preventing unregistered clients to access to some data, you
 can do it using the option _credentialsRequired_:
 
-    app.use(jwt({
-      secret: 'hello world !',
-      credentialsRequired: false
-    }));
+```js
+app.use(jwt({
+  secret: 'hello world !',
+  credentialsRequired: false
+}));
+```

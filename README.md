@@ -10,7 +10,7 @@ This module lets you authenticate HTTP requests using JWT tokens in your restify
 
     $ npm i restify-jwt-community
     
-> [DOCUMENTATION HERE](docs/index.md)
+> [DOCUMENTATION HERE](https://frbuceta.github.io/restify-jwt-community/)
 
 ## Status
 
