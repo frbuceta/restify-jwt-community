@@ -96,9 +96,9 @@ describe('failure tests', function() {
 
   it('should throw if jwt is an invalid json', function() {
     req.headers = {};
-    req.headers.authorization = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.'
-      + 'eyJpYXQiOjExNTg0MDcxNjksImp0aSI6ImVhZDU4YTk1LWY1NDUtNDA1My04Y2RhLTA0'
-      + 'ODdjYWIYgTBmMiIsImV4cCI6MTUxMTExMDc4OX0.foo';
+    req.headers.authorization = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.' +
+      'eyJpYXQiOjExNTg0MDcxNjksImp0aSI6ImVhZDU4YTk1LWY1NDUtNDA1My04Y2RhLTA0' +
+      'ODdjYWIYgTBmMiIsImV4cCI6MTUxMTExMDc4OX0.foo';
     restifyjwt({secret: 'shhhh'})(req, res, function(err) {
       assert.ok(err);
       assert.equal(err.body.code, 'InvalidCredentials');
