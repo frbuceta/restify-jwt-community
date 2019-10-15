@@ -1,10 +1,28 @@
 {
-  "branchPrefix": "renovate/",
+  "extends": [
+    ":maintainLockFilesMonthly",
+    ":prConcurrentLimit10",
+    ":prHourlyLimitNone",
+    "config:js-lib"
+  ],
+  "ignorePresets": [
+    ":maintainLockFilesDisabled",
+    ":prConcurrentLimit20",
+    ":prHourlyLimit2"
+  ],
   "rangeStrategy": "bump",
-  "supportPolicy": ["all"],
-  "travis": { "enabled": true },
+  "supportPolicy": [
+    "all"
+  ],
+  "travis": {
+    "enabled": true
+  },
   "vulnerabilityAlerts": {
-    "labels": ["security"],
-    "assignees": ["@frbuceta"]
+    "assignees": [
+      "@frbuceta"
+    ],
+    "labels": [
+      "security"
+    ]
   }
 }
