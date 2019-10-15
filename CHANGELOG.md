@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/frbuceta/restify-jwt-community/compare/v1.1.0...v1.1.1) (2019-10-15)
+
+
+### Bug Fixes
+
+* **deps:** security vulnerability with csv-parse ([8f35e59](https://github.com/frbuceta/restify-jwt-community/commit/8f35e59))
+* **deps:** security vulnerability with handlebars ([a3722f3](https://github.com/frbuceta/restify-jwt-community/commit/a3722f3))
+
 ## 1.1.0 (2019-08-12)
 
 ### 1.0.14 (2019-07-17)
