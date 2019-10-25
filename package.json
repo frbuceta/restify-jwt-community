@@ -48,7 +48,7 @@
     "@commitlint/config-conventional": "8.2.0",
     "@types/restify-errors": "4.3.3",
     "cz-conventional-changelog": "3.0.2",
-    "eslint": "6.5.1",
+    "eslint": "6.6.0",
     "eslint-config-google": "0.14.0",
     "husky": "3.0.9",
     "jest": "24.9.0",
