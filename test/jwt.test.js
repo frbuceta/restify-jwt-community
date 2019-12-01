@@ -26,7 +26,7 @@ describe('failure tests', function() {
         assert.ok(err);
         assert.equal(err.message, 'No authorization token was found');
       });
-    }
+    },
   );
 
   it('support unless skip', function() {
@@ -69,7 +69,7 @@ describe('failure tests', function() {
       assert.ok(err);
       assert.equal(
         err.message,
-        'Format is Authorization: Bearer [token] or Jwt [token]'
+        'Format is Authorization: Bearer [token] or Jwt [token]',
       );
     });
   });
@@ -91,7 +91,7 @@ describe('failure tests', function() {
         assert.ok(err);
         assert.equal(err.body.code, 'InvalidCredentials');
       });
-    }
+    },
   );
 
   it('should throw if jwt is an invalid json', function() {
@@ -133,7 +133,7 @@ describe('failure tests', function() {
       assert.equal(err.body.code, 'InvalidCredentials');
       assert.equal(
         err.jse_cause.message,
-        'jwt audience invalid. expected: not-expected-audience'
+        'jwt audience invalid. expected: not-expected-audience',
       );
       done();
     });
@@ -221,7 +221,7 @@ describe('work tests', function() {
       restifyjwt({secret: secret})(req, res, function() {
         assert.equal('bar', req.user.foo);
       });
-    }
+    },
   );
 
   it('should work if authorization header is valid jwt ("JWT <token>")',
@@ -234,14 +234,14 @@ describe('work tests', function() {
       restifyjwt({secret: secret})(req, res, function() {
         assert.equal('bar', req.user.foo);
       });
-    }
+    },
   );
 
   it('should work if authorization header is valid with a buffer secret',
     function() {
       const secret = new Buffer(
         'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-        'base64'
+        'base64',
       );
       const token = jwt.sign({foo: 'bar'}, secret);
 
@@ -288,7 +288,7 @@ describe('work tests', function() {
         assert(typeof err === 'undefined');
         assert(typeof req.user === 'undefined');
       });
-    }
+    },
   );
 
   it('should not work if no authorization header', function() {

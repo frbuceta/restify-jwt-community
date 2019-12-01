@@ -21,8 +21,8 @@ describe('multitenancy', function() {
 
     return cb(
       new errors.UnauthorizedError(
-        'Could not find secret for issuer.'
-      )
+        'Could not find secret for issuer.',
+      ),
     );
   };
 
