@@ -1,7 +1,9 @@
 ---
 name: Feature request
 about: Suggest an idea for Restify JWT Community
-labels: 'Type: feature request'
+title: ''
+labels: feature
+assignees: ''
 
 ---
 

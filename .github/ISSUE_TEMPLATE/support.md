@@ -1,7 +1,9 @@
 ---
 name: Support
 about: Request support for any problem you're having with Restify JWT Community
-labels: 'Type: support'
+title: ''
+labels: question
+assignees: ''
 
 ---
 
