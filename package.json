@@ -51,7 +51,7 @@
     "eslint": "6.8.0",
     "eslint-config-google": "0.14.0",
     "husky": "4.2.0",
-    "jest": "24.9.0",
+    "jest": "25.1.0",
     "restify": "8.5.1",
     "standard-version": "7.1.0"
   },
