@@ -49,7 +49,7 @@
     "cz-conventional-changelog": "3.0.2",
     "eslint": "6.8.0",
     "eslint-config-google": "0.14.0",
-    "husky": "4.2.0",
+    "husky": "4.2.1",
     "jest": "25.1.0",
     "restify": "8.5.1"
   },
