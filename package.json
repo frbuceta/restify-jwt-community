@@ -50,7 +50,7 @@
     "cz-conventional-changelog": "3.1.0",
     "eslint": "6.8.0",
     "eslint-config-google": "0.14.0",
-    "husky": "4.2.1",
+    "husky": "4.2.3",
     "jest": "25.1.0",
     "restify": "8.5.1",
     "semantic-release": "17.0.2"
