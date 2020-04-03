@@ -1,28 +1,25 @@
 {
   "extends": [
+    "config:js-lib",
     ":maintainLockFilesMonthly",
     ":prConcurrentLimit10",
     ":prHourlyLimitNone",
-    "config:js-lib"
+    ":semanticCommits"
   ],
   "ignorePresets": [
     ":maintainLockFilesDisabled",
     ":prConcurrentLimit20",
     ":prHourlyLimit2"
   ],
+  "enabledManagers": ["travis"],
   "rangeStrategy": "bump",
   "supportPolicy": [
-    "all"
+    "lts",
+    "current"
   ],
-  "travis": {
-    "enabled": true
-  },
   "vulnerabilityAlerts": {
-    "assignees": [
-      "@frbuceta"
-    ],
-    "labels": [
-      "security"
-    ]
+    "enabled": true,
+    "assignees": ["@frbuceta"],
+    "labels": ["security"]
   }
 }
