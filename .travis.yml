@@ -10,6 +10,8 @@ jobs:
   include:
     - stage: release
       node_js: lts/*
+      script: skip
+      after_success: skip
       deploy:
         provider: script
         skip_cleanup: true
