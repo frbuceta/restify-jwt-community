@@ -1,7 +1,6 @@
 {
   "extends": [
     "config:js-lib",
-    ":maintainLockFilesMonthly",
     ":prConcurrentLimit10",
     ":prHourlyLimitNone",
     ":semanticCommits"
@@ -17,6 +16,13 @@
     "lts",
     "current"
   ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "semanticCommitType": "fix",
+    "requiredStatusChecks": [],
+    "extends": ["schedule:monthly"]
+  },
   "vulnerabilityAlerts": {
     "enabled": true,
     "assignees": ["@frbuceta"],
