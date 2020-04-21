@@ -9,6 +9,7 @@ branches:
 jobs:
   include:
     - stage: release
+      if: branch = master
       node_js: lts/*
       script: skip
       after_success: skip
