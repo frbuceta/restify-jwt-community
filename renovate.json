@@ -10,7 +10,7 @@
     ":prConcurrentLimit20",
     ":prHourlyLimit2"
   ],
-  "enabledManagers": ["travis"],
+  "enabledManagers": ["npm","travis"],
   "rangeStrategy": "bump",
   "supportPolicy": [
     "lts",
