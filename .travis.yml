@@ -9,13 +9,13 @@ branches:
 jobs:
   include:
     - stage: release
-      if: branch = master
+      if: branch = master AND type != pull_request
       node_js: lts/*
       script: skip
       after_success: skip
       deploy:
         provider: script
-        skip_cleanup: true
+        cleanup: true
         script: npx semantic-release
 script:
   - npm test
