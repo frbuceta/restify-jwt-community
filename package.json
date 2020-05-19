@@ -50,7 +50,7 @@
     "eslint": "7.0.0",
     "eslint-config-google": "0.14.0",
     "husky": "4.2.5",
-    "jest": "25.2.7",
+    "jest": "25.5.4",
     "restify": "8.5.1"
   },
   "peerDependencies": {
