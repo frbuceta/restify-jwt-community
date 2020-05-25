@@ -54,7 +54,7 @@
     "husky": "4.2.5",
     "jest": "26.0.1",
     "restify": "8.5.1",
-    "semantic-release": "17.0.7"
+    "semantic-release": "17.0.8"
   },
   "peerDependencies": {
     "restify": "5.x || 6.x || 7.x || 8.x",
