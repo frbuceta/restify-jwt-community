@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/frbuceta/restify-jwt-community/compare/v1.1.4...v1.1.5) (2020-09-14)
+
+
+### Bug Fixes
+
+* **deps:** bump node-fetch from 2.6.0 to 2.6.1 ([#141](https://github.com/frbuceta/restify-jwt-community/issues/141)) ([05d1473](https://github.com/frbuceta/restify-jwt-community/commit/05d14731d5bcb8b40cb66a700fb41f9506d6ba5c))
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
