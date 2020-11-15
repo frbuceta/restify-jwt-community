@@ -10,7 +10,6 @@
     ":prConcurrentLimit20",
     ":prHourlyLimit2"
   ],
-  "enabledManagers": ["npm","travis"],
   "rangeStrategy": "bump",
   "supportPolicy": [
     "lts",
@@ -21,11 +20,17 @@
     "automerge": true,
     "semanticCommitType": "fix",
     "requiredStatusChecks": [],
-    "extends": ["schedule:monthly"]
+    "extends": [
+      "schedule:monthly"
+    ]
   },
   "vulnerabilityAlerts": {
     "enabled": true,
-    "assignees": ["@frbuceta"],
-    "labels": ["security"]
+    "assignees": [
+      "@frbuceta"
+    ],
+    "labels": [
+      "security"
+    ]
   }
 }
