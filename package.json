@@ -1,7 +1,7 @@
 {
   "name": "restify-jwt-community",
   "version": "1.1.8",
-  "description": "JWT authentication middleware.",
+  "description": "JWT authentication middleware for Restify",
   "keywords": [
     "auth",
     "authentication",
@@ -12,22 +12,18 @@
     "oauth",
     "restify"
   ],
-  "files": [
-    "readme.md",
-    "lib",
-    "test"
-  ],
   "main": "./lib",
   "author": {
     "name": "Francisco Buceta",
     "email": "frbuceta@gmail.com",
-    "url": "https://github.com/frbuceta/"
+    "url": "https://github.com/frbuceta"
   },
   "license": "MIT",
   "homepage": "https://github.com/frbuceta/restify-jwt-community#readme",
+  "bugs": "https://github.com/frbuceta/restify-jwt-community/issues",
   "repository": "github:frbuceta/restify-jwt-community",
-  "bugs": {
-    "url": "https://github.com/frbuceta/restify-jwt-community/issues"
+  "engines": {
+    "node": ">= 4.0"
   },
   "scripts": {
     "lint": "eslint .",
@@ -35,6 +31,15 @@
     "test": "node node_modules/.bin/jest",
     "test:dev": "node_modules/.bin/jest --watch",
     "test:coverage": "node node_modules/.bin/jest --coverage"
+  },
+  "files": [
+    "readme.md",
+    "lib",
+    "test"
+  ],
+  "peerDependencies": {
+    "restify": "5.x || 6.x || 7.x || 8.x",
+    "restify-errors": "5.x || 6.x || 7.x || 8.x"
   },
   "dependencies": {
     "async": "^3.1.0",
@@ -55,13 +60,6 @@
     "jest": "26.6.3",
     "restify": "8.5.1",
     "semantic-release": "17.3.7"
-  },
-  "peerDependencies": {
-    "restify": "5.x || 6.x || 7.x || 8.x",
-    "restify-errors": "5.x || 6.x || 7.x || 8.x"
-  },
-  "engines": {
-    "node": ">= 4.0"
   },
   "husky": {
     "hooks": {
