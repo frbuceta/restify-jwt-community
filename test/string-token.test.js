@@ -1,6 +1,6 @@
 const assert = require('assert');
 const jwt = require('jsonwebtoken');
-const restifyjwt = require('../lib');
+const restifyJWT = require('../lib');
 
 describe('string tokens', function() {
   const req = {};
@@ -12,8 +12,8 @@ describe('string tokens', function() {
 
     req.headers = {};
     req.headers.authorization = 'Bearer ' + token;
-    restifyjwt({secret: secret})(req, res, function() {
-      assert.equal('foo', req.user);
+    restifyJWT({secret: secret})(req, res, function() {
+      assert.strictEqual('foo', req.user);
     });
   });
 });

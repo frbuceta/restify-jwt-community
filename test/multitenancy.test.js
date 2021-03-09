@@ -1,7 +1,7 @@
 const assert = require('assert');
 const errors = require('restify-errors');
 const jwt = require('jsonwebtoken');
-const restifyjwt = require('../lib');
+const restifyJWT = require('../lib');
 
 describe('multitenancy', function() {
   const req = {};
@@ -26,7 +26,7 @@ describe('multitenancy', function() {
     );
   };
 
-  const middleware = restifyjwt({
+  const middleware = restifyJWT({
     secret: secretCallback,
   });
 
@@ -37,7 +37,7 @@ describe('multitenancy', function() {
     req.headers.authorization = 'Bearer ' + token;
 
     middleware(req, res, function() {
-      assert.equal('bar', req.user.foo);
+      assert.strictEqual('bar', req.user.foo);
     });
   });
 
@@ -50,8 +50,8 @@ describe('multitenancy', function() {
 
     middleware(req, res, function(err) {
       assert.ok(err);
-      assert.equal(err.body.code, 'Unauthorized');
-      assert.equal(err.message, 'Could not find secret for issuer.');
+      assert.strictEqual(err.body.code, 'Unauthorized');
+      assert.strictEqual(err.message, 'Could not find secret for issuer.');
     });
   });
 
@@ -61,15 +61,15 @@ describe('multitenancy', function() {
     req.headers = {};
     req.headers.authorization = 'Bearer ' + token;
 
-    restifyjwt({
+    restifyJWT({
       secret: secretCallback,
       isRevoked: function(req, payload, done) {
         done(null, true);
       },
     })(req, res, function(err) {
       assert.ok(err);
-      assert.equal(err.body.code, 'Unauthorized');
-      assert.equal(err.message, 'The token has been revoked.');
+      assert.strictEqual(err.body.code, 'Unauthorized');
+      assert.strictEqual(err.message, 'The token has been revoked.');
     });
   });
 });

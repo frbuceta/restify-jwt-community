@@ -1,13 +1,13 @@
 const assert = require('assert');
 const jwt = require('jsonwebtoken');
-const restifyjwt = require('../lib');
+const restifyJWT = require('../lib');
 
 describe('revoked jwts', function() {
   const secret = 'shhhhhh';
 
   const revokedId = '1234';
 
-  const middleware = restifyjwt({
+  const middleware = restifyJWT({
     secret: secret,
     isRevoked: function(req, payload, done) {
       done(null, payload.jti && payload.jti === revokedId);
@@ -24,8 +24,8 @@ describe('revoked jwts', function() {
 
     middleware(req, res, function(err) {
       assert.ok(err);
-      assert.equal(err.body.code, 'Unauthorized');
-      assert.equal(err.message, 'The token has been revoked.');
+      assert.strictEqual(err.body.code, 'Unauthorized');
+      assert.strictEqual(err.message, 'The token has been revoked.');
     });
   });
 
@@ -38,7 +38,7 @@ describe('revoked jwts', function() {
     req.headers.authorization = 'Bearer ' + token;
 
     middleware(req, res, function() {
-      assert.equal('bar', req.user.foo);
+      assert.strictEqual('bar', req.user.foo);
     });
   });
 
@@ -50,14 +50,14 @@ describe('revoked jwts', function() {
     req.headers = {};
     req.headers.authorization = 'Bearer ' + token;
 
-    restifyjwt({
+    restifyJWT({
       secret: secret,
       isRevoked: function(req, payload, done) {
         done(new Error('An error ocurred'));
       },
     })(req, res, function(err) {
       assert.ok(err);
-      assert.equal(err.message, 'An error ocurred');
+      assert.strictEqual(err.message, 'An error ocurred');
     });
   });
 });

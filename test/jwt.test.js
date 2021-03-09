@@ -1,7 +1,7 @@
 const assert = require('assert');
 const errors = require('restify-errors');
 const jwt = require('jsonwebtoken');
-const restifyjwt = require('../lib');
+const restifyJWT = require('../lib');
 
 describe('failure tests', function() {
   const req = {};
@@ -9,29 +9,29 @@ describe('failure tests', function() {
 
   it('should throw if options not sent', function(done) {
     try {
-      restifyjwt();
+      restifyJWT();
     } catch (e) {
       assert.ok(e);
-      assert.equal(e.message, 'secret should be set');
+      assert.strictEqual(e.message, 'secret should be set');
       done();
     }
   });
 
   it('should throw if no authorization header and credentials are required',
     function() {
-      restifyjwt({
+      restifyJWT({
         secret: 'shhhh',
         credentialsRequired: true,
       })(req, res, function(err) {
         assert.ok(err);
-        assert.equal(err.message, 'No authorization token was found');
+        assert.strictEqual(err.message, 'No authorization token was found');
       });
     },
   );
 
   it('support unless skip', function() {
     req.originalUrl = '/index.html';
-    restifyjwt({
+    restifyJWT({
       secret: 'shhhh',
     }).unless({
       path: '/index.html',
@@ -46,7 +46,7 @@ describe('failure tests', function() {
     corsReq.headers = {
       'access-control-request-headers': 'sasa, sras,  authorization ',
     };
-    restifyjwt({secret: 'shhhh'})(corsReq, res, function(err) {
+    restifyJWT({secret: 'shhhh'})(corsReq, res, function(err) {
       assert.ok(!err);
     });
   });
@@ -57,7 +57,7 @@ describe('failure tests', function() {
     req.headers = {
       'access-control-request-headers': 'sasa, sras',
     };
-    restifyjwt({secret: 'shhhh'})(req, res, function(err) {
+    restifyJWT({secret: 'shhhh'})(req, res, function(err) {
       assert.ok(err);
     });
   });
@@ -65,9 +65,9 @@ describe('failure tests', function() {
   it('should throw if authorization header is malformed', function() {
     req.headers = {};
     req.headers.authorization = 'wrong';
-    restifyjwt({secret: 'shhhh'})(req, res, function(err) {
+    restifyJWT({secret: 'shhhh'})(req, res, function(err) {
       assert.ok(err);
-      assert.equal(
+      assert.strictEqual(
         err.message,
         'Format is Authorization: Bearer [token] or Jwt [token]',
       );
@@ -77,9 +77,9 @@ describe('failure tests', function() {
   it('should throw if authorization header is not Bearer nor JWT', function() {
     req.headers = {};
     req.headers.authorization = 'Basic foobar';
-    restifyjwt({secret: 'shhhh'})(req, res, function(err) {
+    restifyJWT({secret: 'shhhh'})(req, res, function(err) {
       assert.ok(err);
-      assert.equal(err.body.code, 'InvalidCredentials');
+      assert.strictEqual(err.body.code, 'InvalidCredentials');
     });
   });
 
@@ -87,9 +87,9 @@ describe('failure tests', function() {
     function() {
       req.headers = {};
       req.headers.authorization = 'Bearer wrongjwt';
-      restifyjwt({secret: 'shhhh'})(req, res, function(err) {
+      restifyJWT({secret: 'shhhh'})(req, res, function(err) {
         assert.ok(err);
-        assert.equal(err.body.code, 'InvalidCredentials');
+        assert.strictEqual(err.body.code, 'InvalidCredentials');
       });
     },
   );
@@ -99,9 +99,9 @@ describe('failure tests', function() {
     req.headers.authorization = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.' +
       'eyJpYXQiOjExNTg0MDcxNjksImp0aSI6ImVhZDU4YTk1LWY1NDUtNDA1My04Y2RhLTA0' +
       'ODdjYWIYgTBmMiIsImV4cCI6MTUxMTExMDc4OX0.foo';
-    restifyjwt({secret: 'shhhh'})(req, res, function(err) {
+    restifyJWT({secret: 'shhhh'})(req, res, function(err) {
       assert.ok(err);
-      assert.equal(err.body.code, 'InvalidCredentials');
+      assert.strictEqual(err.body.code, 'InvalidCredentials');
     });
   });
 
@@ -111,10 +111,10 @@ describe('failure tests', function() {
 
     req.headers = {};
     req.headers.authorization = 'Bearer ' + token;
-    restifyjwt({secret: 'different-shhhh'})(req, res, function(err) {
+    restifyJWT({secret: 'different-shhhh'})(req, res, function(err) {
       assert.ok(err);
-      assert.equal(err.body.code, 'InvalidCredentials');
-      assert.equal(err.jse_cause.message, 'invalid signature');
+      assert.strictEqual(err.body.code, 'InvalidCredentials');
+      assert.strictEqual(err.jse_cause.message, 'invalid signature');
       done();
     });
   });
@@ -125,13 +125,13 @@ describe('failure tests', function() {
 
     req.headers = {};
     req.headers.authorization = 'Bearer ' + token;
-    restifyjwt({
+    restifyJWT({
       secret: 'shhhhhh',
       audience: 'not-expected-audience',
     })(req, res, function(err) {
       assert.ok(err);
-      assert.equal(err.body.code, 'InvalidCredentials');
-      assert.equal(
+      assert.strictEqual(err.body.code, 'InvalidCredentials');
+      assert.strictEqual(
         err.jse_cause.message,
         'jwt audience invalid. expected: not-expected-audience',
       );
@@ -145,10 +145,10 @@ describe('failure tests', function() {
 
     req.headers = {};
     req.headers.authorization = 'Bearer ' + token;
-    restifyjwt({secret: 'shhhhhh'})(req, res, function(err) {
+    restifyJWT({secret: 'shhhhhh'})(req, res, function(err) {
       assert.ok(err);
-      assert.equal(err.body.code, 'Unauthorized');
-      assert.equal(err.message, 'The token has expired');
+      assert.strictEqual(err.body.code, 'Unauthorized');
+      assert.strictEqual(err.message, 'The token has expired');
       done();
     });
   });
@@ -159,10 +159,10 @@ describe('failure tests', function() {
 
     req.headers = {};
     req.headers.authorization = 'Bearer ' + token;
-    restifyjwt({secret: 'shhhhhh', issuer: 'http://wrong'})(req, res, function(err) {
+    restifyJWT({secret: 'shhhhhh', issuer: 'http://wrong'})(req, res, function(err) {
       assert.ok(err);
-      assert.equal(err.body.code, 'InvalidCredentials');
-      assert.equal(err.jse_cause.message, 'jwt issuer invalid. expected: http://wrong');
+      assert.strictEqual(err.body.code, 'InvalidCredentials');
+      assert.strictEqual(err.jse_cause.message, 'jwt issuer invalid. expected: http://wrong');
       done();
     });
   });
@@ -175,12 +175,12 @@ describe('failure tests', function() {
       throw new errors.InvalidCredentialsError('Invalid token!');
     }
 
-    restifyjwt({
+    restifyJWT({
       secret: 'shhhhhh',
       getToken: getTokenThatThrowsError,
     })(req, res, function(err) {
       assert.ok(err);
-      assert.equal(err.message, 'Invalid token!');
+      assert.strictEqual(err.message, 'Invalid token!');
     });
   });
 
@@ -189,7 +189,7 @@ describe('failure tests', function() {
     const secret = 'shhh';
     const token = jwt.sign({foo: 'bar', iss: 'http://www'}, secret);
     // manipulate the token
-    const newContent = new Buffer('{foo: \'bar\', edg: \'ar\'}')
+    const newContent = Buffer.from('{foo: \'bar\', edg: \'ar\'}')
       .toString('base64');
     const splitetToken = token.split('.');
     splitetToken[1] = newContent;
@@ -198,10 +198,10 @@ describe('failure tests', function() {
     // build request
     req.headers = [];
     req.headers.authorization = 'Bearer ' + newToken;
-    restifyjwt({secret: secret})(req, res, function(err) {
+    restifyJWT({secret: secret})(req, res, function(err) {
       assert.ok(err);
-      assert.equal(err.body.code, 'InvalidCredentials');
-      assert.equal(err.jse_cause.message, 'invalid token');
+      assert.strictEqual(err.body.code, 'InvalidCredentials');
+      assert.strictEqual(err.jse_cause.message, 'invalid token');
       done();
     });
   });
@@ -218,8 +218,8 @@ describe('work tests', function() {
 
       req.headers = {};
       req.headers.authorization = 'Bearer ' + token;
-      restifyjwt({secret: secret})(req, res, function() {
-        assert.equal('bar', req.user.foo);
+      restifyJWT({secret: secret})(req, res, function() {
+        assert.strictEqual('bar', req.user.foo);
       });
     },
   );
@@ -231,15 +231,15 @@ describe('work tests', function() {
 
       req.headers = {};
       req.headers.authorization = 'JWT ' + token;
-      restifyjwt({secret: secret})(req, res, function() {
-        assert.equal('bar', req.user.foo);
+      restifyJWT({secret: secret})(req, res, function() {
+        assert.strictEqual('bar', req.user.foo);
       });
     },
   );
 
   it('should work if authorization header is valid with a buffer secret',
     function() {
-      const secret = new Buffer(
+      const secret = Buffer.from(
         'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
         'base64',
       );
@@ -247,8 +247,8 @@ describe('work tests', function() {
 
       req.headers = {};
       req.headers.authorization = 'Bearer ' + token;
-      restifyjwt({secret: secret})(req, res, function() {
-        assert.equal('bar', req.user.foo);
+      restifyJWT({secret: secret})(req, res, function() {
+        assert.strictEqual('bar', req.user.foo);
       });
     });
 
@@ -258,15 +258,15 @@ describe('work tests', function() {
 
     req.headers = {};
     req.headers.authorization = 'Bearer ' + token;
-    restifyjwt({secret: secret, userProperty: 'auth'})(req, res, function() {
-      assert.equal('bar', req.auth.foo);
+    restifyJWT({secret: secret, userProperty: 'auth'})(req, res, function() {
+      assert.strictEqual('bar', req.auth.foo);
     });
   });
 
   it('should work if no authorization header and credentials are not required',
     function() {
       req = {};
-      restifyjwt({
+      restifyJWT({
         secret: 'shhhh',
         credentialsRequired: false,
       })(req, res, function(err) {
@@ -281,7 +281,7 @@ describe('work tests', function() {
 
       req.headers = {};
       req.headers.authorization = 'Bearer ' + token;
-      restifyjwt({
+      restifyJWT({
         secret: secret,
         credentialsRequired: false,
       })(req, res, function(err) {
@@ -293,7 +293,7 @@ describe('work tests', function() {
 
   it('should not work if no authorization header', function() {
     req = {};
-    restifyjwt({secret: 'shhhh'})(req, res, function(err) {
+    restifyJWT({secret: 'shhhh'})(req, res, function(err) {
       assert(typeof err !== 'undefined');
     });
   });
@@ -314,11 +314,11 @@ describe('work tests', function() {
       return req.query.token;
     }
 
-    restifyjwt({
+    restifyJWT({
       secret: secret,
       getToken: getTokenFromQuery,
     })(req, res, function() {
-      assert.equal('bar', req.user.foo);
+      assert.strictEqual('bar', req.user.foo);
     });
   });
 
@@ -326,8 +326,8 @@ describe('work tests', function() {
     function() {
       const secret = 'shhhhhh';
       const secretCallback = function(req, headers, payload, cb) {
-        assert.equal(headers.alg, 'HS256');
-        assert.equal(payload.foo, 'bar');
+        assert.strictEqual(headers.alg, 'HS256');
+        assert.strictEqual(payload.foo, 'bar');
         process.nextTick(function() {
           return cb(null, secret);
         });
@@ -336,8 +336,8 @@ describe('work tests', function() {
 
       req.headers = {};
       req.headers.authorization = 'Bearer ' + token;
-      restifyjwt({secret: secretCallback})(req, res, function() {
-        assert.equal('bar', req.user.foo);
+      restifyJWT({secret: secretCallback})(req, res, function() {
+        assert.strictEqual('bar', req.user.foo);
       });
     });
 });
