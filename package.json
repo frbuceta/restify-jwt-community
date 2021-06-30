@@ -58,7 +58,7 @@
     "husky": "4.3.8",
     "jest": "27.0.4",
     "restify": "8.5.1",
-    "semantic-release": "17.4.3"
+    "semantic-release": "17.4.4"
   },
   "husky": {
     "hooks": {
