@@ -53,7 +53,7 @@
     "@semantic-release/git": "9.0.0",
     "@types/restify-errors": "4.3.3",
     "cz-conventional-changelog": "3.3.0",
-    "eslint": "7.29.0",
+    "eslint": "7.31.0",
     "eslint-config-google": "0.14.0",
     "husky": "4.3.8",
     "jest": "27.0.6",
