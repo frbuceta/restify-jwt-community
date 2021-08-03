@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "async": "^3.2.0",
-    "express-unless": "^0.5.0",
+    "express-unless": "^1.0.0",
     "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
