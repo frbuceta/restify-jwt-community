@@ -28,12 +28,7 @@ This module lets you authenticate HTTP requests using JWT tokens in your restify
 ---
 
 <p align="center">
-    <a href="#"><img src="https://img.shields.io/david/frbuceta/restify-jwt-community.svg?style=flat-square" /></a>
-    <a href="#"><img src="https://img.shields.io/david/dev/frbuceta/restify-jwt-community.svg?style=flat-square" /></a>
-    <a href="#"><img src="https://img.shields.io/david/peer/frbuceta/restify-jwt-community.svg?style=flat-square" /></a>
-</p>
-
-<p align="center">
+    <a href="#"><img src="https://img.shields.io/librariesio/release/npm/restify-jwt-community?style=flat-square" /></a>
     <a href="#" alt="Travis branch"><img src="https://img.shields.io/travis/com/frbuceta/restify-jwt-community/master.svg?style=flat-square" /></a>
     <a href="#" alt="Coveralls github branch"><img src="https://img.shields.io/coveralls/github/frbuceta/restify-jwt-community/master.svg?style=flat-square" /></a>
 </p>
