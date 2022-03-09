@@ -57,7 +57,7 @@
     "eslint-config-google": "0.14.0",
     "husky": "4.3.8",
     "jest": "27.4.7",
-    "restify": "8.6.0",
+    "restify": "8.6.1",
     "semantic-release": "19.0.2"
   },
   "husky": {
