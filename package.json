@@ -38,10 +38,6 @@
     "lib",
     "test"
   ],
-  "peerDependencies": {
-    "restify": ">=5 <9",
-    "restify-errors": ">=5 <9"
-  },
   "dependencies": {
     "async": "^3.2.0",
     "express-unless": "^2.0.0",
@@ -57,7 +53,8 @@
     "eslint-config-google": "0.14.0",
     "husky": "8.0.1",
     "jest": "28.1.0",
-    "restify": "8.6.1",
+    "restify": "^8.6.1",
+    "restify-errors": "^8.0.2",
     "semantic-release": "19.0.2"
   },
   "config": {
