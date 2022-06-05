@@ -40,7 +40,7 @@
   ],
   "peerDependencies": {
     "restify": ">=5 <8",
-    "restify-errors": ">=5 <8"
+    "restify-errors": ">=5 <9"
   },
   "dependencies": {
     "async": "^3.2.0",
