@@ -39,7 +39,7 @@
     "test"
   ],
   "peerDependencies": {
-    "restify": ">=5 <8",
+    "restify": ">=5 <9",
     "restify-errors": ">=5 <8"
   },
   "dependencies": {
