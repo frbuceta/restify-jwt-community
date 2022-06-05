@@ -39,8 +39,8 @@
     "test"
   ],
   "peerDependencies": {
-    "restify": "5.x || 6.x || 7.x || 8.x",
-    "restify-errors": "5.x || 6.x || 7.x || 8.x"
+    "restify": ">=5 <9",
+    "restify-errors": ">=5 <9"
   },
   "dependencies": {
     "async": "^3.2.0",
