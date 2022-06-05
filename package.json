@@ -26,6 +26,7 @@
     "node": ">= 4.0"
   },
   "scripts": {
+    "prepare": "husky install",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "node node_modules/.bin/jest",
@@ -55,17 +56,10 @@
     "cz-conventional-changelog": "3.3.0",
     "eslint": "8.17.0",
     "eslint-config-google": "0.14.0",
-    "husky": "4.3.8",
+    "husky": "8.0.1",
     "jest": "28.1.0",
     "restify": "8.6.1",
     "semantic-release": "19.0.2"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "npm run lint:fix",
-      "pre-push": "npm test"
-    }
   },
   "config": {
     "commitizen": {
