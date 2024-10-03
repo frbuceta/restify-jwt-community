@@ -1,20 +1,21 @@
-/* eslint-disable jest/expect-expect */
-const assert = require('node:assert');
 const jwt = require('jsonwebtoken');
 const restifyJWT = require('../lib');
 
-describe('string tokens', function() {
+describe('string tokens', () => {
   const req = {};
   const res = {};
 
-  it('should work with a valid string token', function() {
+  it('should work with a valid string token', async () => {
     const secret = 'shhhhhh';
     const token = jwt.sign('foo', secret);
 
-    req.headers = {};
-    req.headers.authorization = 'Bearer ' + token;
-    restifyJWT({secret: secret})(req, res, function() {
-      assert.strictEqual('foo', req.user);
+    req.headers = { authorization: `Bearer ${token}` };
+
+    await new Promise((resolve) => {
+      restifyJWT({ secret })(req, res, () => {
+        expect(req.user).toBe('foo');
+        resolve();
+      });
     });
   });
 });
