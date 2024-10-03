@@ -1,63 +1,67 @@
-const assert = require('assert');
 const jwt = require('jsonwebtoken');
 const restifyJWT = require('../lib');
 
-describe('revoked jwts', function() {
+describe('revoked jwts', () => {
   const secret = 'shhhhhh';
-
   const revokedId = '1234';
 
   const middleware = restifyJWT({
     secret: secret,
-    isRevoked: function(req, payload, done) {
+    isRevoked: (req, payload, done) => {
       done(null, payload.jti && payload.jti === revokedId);
     },
   });
 
-  it('should throw if token is revoked', function() {
+  it('should throw if token is revoked', async () => {
     const req = {};
     const res = {};
-    const token = jwt.sign({jti: revokedId, foo: 'bar'}, secret);
+    const token = jwt.sign({ jti: revokedId, foo: 'bar' }, secret);
 
-    req.headers = {};
-    req.headers.authorization = 'Bearer ' + token;
+    req.headers = { authorization: `Bearer ${token}` };
 
-    middleware(req, res, function(err) {
-      assert.ok(err);
-      assert.strictEqual(err.body.code, 'Unauthorized');
-      assert.strictEqual(err.message, 'The token has been revoked.');
+    await new Promise((resolve) => {
+      middleware(req, res, (err) => {
+        expect(err).toBeDefined();
+        expect(err.body.code).toBe('Unauthorized');
+        expect(err.message).toBe('The token has been revoked.');
+        resolve();
+      });
     });
   });
 
-  it('should work if token is not revoked', function() {
+  it('should work if token is not revoked', async () => {
     const req = {};
     const res = {};
-    const token = jwt.sign({jti: '1233', foo: 'bar'}, secret);
+    const token = jwt.sign({ jti: '1233', foo: 'bar' }, secret);
 
-    req.headers = {};
-    req.headers.authorization = 'Bearer ' + token;
+    req.headers = { authorization: `Bearer ${token}` };
 
-    middleware(req, res, function() {
-      assert.strictEqual('bar', req.user.foo);
+    await new Promise((resolve) => {
+      middleware(req, res, () => {
+        expect(req.user.foo).toBe('bar');
+        resolve();
+      });
     });
   });
 
-  it('should throw if error occurs checking if token is revoked', function() {
+  it('should throw if error occurs checking if token is revoked', async () => {
     const req = {};
     const res = {};
-    const token = jwt.sign({jti: revokedId, foo: 'bar'}, secret);
+    const token = jwt.sign({ jti: revokedId, foo: 'bar' }, secret);
 
-    req.headers = {};
-    req.headers.authorization = 'Bearer ' + token;
+    req.headers = { authorization: `Bearer ${token}` };
 
-    restifyJWT({
-      secret: secret,
-      isRevoked: function(req, payload, done) {
-        done(new Error('An error ocurred'));
-      },
-    })(req, res, function(err) {
-      assert.ok(err);
-      assert.strictEqual(err.message, 'An error ocurred');
+    await new Promise((resolve) => {
+      restifyJWT({
+        secret: secret,
+        isRevoked: (req, payload, done) => {
+          done(new Error('An error occurred'));
+        },
+      })(req, res, (err) => {
+        expect(err).toBeDefined();
+        expect(err.message).toBe('An error occurred');
+        resolve();
+      });
     });
   });
 });
