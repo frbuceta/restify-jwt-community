@@ -48,7 +48,7 @@
     "@commitlint/config-conventional": "17.8.1",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
-    "@types/restify-errors": "4.3.6",
+    "@types/restify-errors": "4.3.9",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "8.57.1",
     "eslint-config-google": "0.14.0",
