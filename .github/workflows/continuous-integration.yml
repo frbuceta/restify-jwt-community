@@ -22,16 +22,13 @@ jobs:
       fail-fast: false
       matrix:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-        node-version: [14, 16, 18, 19]
+        node-version: [18, 20, 22]
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Upgrade NPM
-        if: matrix.node-version == 14
-        run: npm i -g npm@latest-7
       - run: npm ci
       - run: npm test
 
