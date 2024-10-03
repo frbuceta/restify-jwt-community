@@ -1,4 +1,5 @@
-const assert = require('assert');
+/* eslint-disable jest/expect-expect */
+const assert = require('node:assert');
 const errors = require('restify-errors');
 const jwt = require('jsonwebtoken');
 const restifyJWT = require('../lib');
@@ -7,14 +8,10 @@ describe('failure tests', function() {
   const req = {};
   const res = {};
 
-  it('should throw if options not sent', function(done) {
-    try {
+  it('should throw if options not sent', async () => {
+    expect(() => {
       restifyJWT();
-    } catch (e) {
-      assert.ok(e);
-      assert.strictEqual(e.message, 'secret should be set');
-      done();
-    }
+    }).toThrow('secret should be set');
   });
 
   it('should throw if no authorization header and credentials are required',
@@ -51,7 +48,7 @@ describe('failure tests', function() {
     });
   });
 
-  it('should throw if "authorization" does not exist in header ', function() {
+  it('should throw if "authorization" does not exist in header', function() {
     const req = {};
     req.method = 'OPTIONS';
     req.headers = {
@@ -105,67 +102,83 @@ describe('failure tests', function() {
     });
   });
 
-  it('should throw if authorization header is not valid jwt', function(done) {
+  it('should throw if authorization header is not valid jwt', async () => {
     const secret = 'shhhhhh';
-    const token = jwt.sign({foo: 'bar'}, secret);
-
+    const token = jwt.sign({ foo: 'bar' }, secret);
+  
     req.headers = {};
     req.headers.authorization = 'Bearer ' + token;
-    restifyJWT({secret: 'different-shhhh'})(req, res, function(err) {
-      assert.ok(err);
-      assert.strictEqual(err.body.code, 'InvalidCredentials');
-      assert.strictEqual(err.jse_cause.message, 'invalid signature');
-      done();
+  
+    const err = await new Promise((resolve) => {
+      restifyJWT({ secret: 'different-shhhh' })(req, res, (error) => {
+        resolve(error);
+      });
     });
+
+    expect(err).toBeDefined();
+    expect(err.body.code).toBe('InvalidCredentials');
+    expect(err.jse_cause.message).toBe('invalid signature');
   });
 
-  it('should throw if audience is not expected', function(done) {
+  it('should throw if audience is not expected', async () => {
     const secret = 'shhhhhh';
-    const token = jwt.sign({foo: 'bar', aud: 'expected-audience'}, secret);
-
+    const token = jwt.sign({ foo: 'bar', aud: 'expected-audience' }, secret);
+  
     req.headers = {};
     req.headers.authorization = 'Bearer ' + token;
-    restifyJWT({
-      secret: 'shhhhhh',
-      audience: 'not-expected-audience',
-    })(req, res, function(err) {
-      assert.ok(err);
-      assert.strictEqual(err.body.code, 'InvalidCredentials');
-      assert.strictEqual(
-        err.jse_cause.message,
-        'jwt audience invalid. expected: not-expected-audience',
-      );
-      done();
+  
+    const err = await new Promise((resolve) => {
+      restifyJWT({
+        secret: 'shhhhhh',
+        audience: 'not-expected-audience',
+      })(req, res, (error) => {
+        resolve(error);
+      });
     });
+
+    expect(err).toBeDefined();
+    expect(err.body.code).toBe('InvalidCredentials');
+    expect(err.jse_cause.message).toBe('jwt audience invalid. expected: not-expected-audience');
   });
+  
 
-  it('should throw if token is expired', function(done) {
+  it('should throw if token is expired', async () => {
     const secret = 'shhhhhh';
-    const token = jwt.sign({foo: 'bar', exp: 1382412921}, secret);
-
+    const token = jwt.sign({ foo: 'bar', exp: 1382412921 }, secret);
+  
     req.headers = {};
     req.headers.authorization = 'Bearer ' + token;
-    restifyJWT({secret: 'shhhhhh'})(req, res, function(err) {
-      assert.ok(err);
-      assert.strictEqual(err.body.code, 'Unauthorized');
-      assert.strictEqual(err.message, 'The token has expired');
-      done();
+  
+    const err = await new Promise((resolve) => {
+      restifyJWT({ secret: 'shhhhhh' })(req, res, (error) => {
+        resolve(error);
+      });
     });
+
+    expect(err).toBeDefined();
+    expect(err.body.code).toBe('Unauthorized');
+    expect(err.message).toBe('The token has expired');
   });
+  
 
-  it('should throw if token issuer is wrong', function(done) {
+  it('should throw if token issuer is wrong', async () => {
     const secret = 'shhhhhh';
-    const token = jwt.sign({foo: 'bar', iss: 'http://foo'}, secret);
-
+    const token = jwt.sign({ foo: 'bar', iss: 'http://foo' }, secret);
+  
     req.headers = {};
     req.headers.authorization = 'Bearer ' + token;
-    restifyJWT({secret: 'shhhhhh', issuer: 'http://wrong'})(req, res, function(err) {
-      assert.ok(err);
-      assert.strictEqual(err.body.code, 'InvalidCredentials');
-      assert.strictEqual(err.jse_cause.message, 'jwt issuer invalid. expected: http://wrong');
-      done();
+  
+    const err = await new Promise((resolve) => {
+      restifyJWT({ secret: 'shhhhhh', issuer: 'http://wrong' })(req, res, (error) => {
+        resolve(error);
+      });
     });
+
+    expect(err).toBeDefined();
+    expect(err.body.code).toBe('InvalidCredentials');
+    expect(err.jse_cause.message).toBe('jwt issuer invalid. expected: http://wrong');
   });
+  
 
   it('should use errors thrown from custom getToken function', function() {
     /**
@@ -185,25 +198,27 @@ describe('failure tests', function() {
   });
 
 
-  it('should throw error when signature is wrong', function(done) {
+  it('should throw error when signature is wrong', async () => {
     const secret = 'shhh';
-    const token = jwt.sign({foo: 'bar', iss: 'http://www'}, secret);
-    // manipulate the token
-    const newContent = Buffer.from('{foo: \'bar\', edg: \'ar\'}')
-      .toString('base64');
+    const token = jwt.sign({ foo: 'bar', iss: 'http://www' }, secret);
+    
+    const newContent = Buffer.from('{foo: \'bar\', edg: \'ar\'}').toString('base64');
     const splitetToken = token.split('.');
     splitetToken[1] = newContent;
     const newToken = splitetToken.join('.');
-
-    // build request
-    req.headers = [];
+  
+    req.headers = {};
     req.headers.authorization = 'Bearer ' + newToken;
-    restifyJWT({secret: secret})(req, res, function(err) {
-      assert.ok(err);
-      assert.strictEqual(err.body.code, 'InvalidCredentials');
-      assert.strictEqual(err.jse_cause.message, 'invalid token');
-      done();
+  
+    const err = await new Promise((resolve) => {
+      restifyJWT({ secret: secret })(req, res, (error) => {
+        resolve(error);
+      });
     });
+  
+    expect(err).toBeDefined();
+    expect(err.body.code).toBe('InvalidCredentials');
+    expect(err.jse_cause.message).toBe('invalid token');
   });
 });
 

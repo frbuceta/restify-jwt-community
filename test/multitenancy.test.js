@@ -1,4 +1,5 @@
-const assert = require('assert');
+/* eslint-disable jest/expect-expect */
+const assert = require('node:assert');
 const errors = require('restify-errors');
 const jwt = require('jsonwebtoken');
 const restifyJWT = require('../lib');
