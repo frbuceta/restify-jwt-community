@@ -53,7 +53,7 @@
     "cz-conventional-changelog": "3.3.0",
     "eslint": "9.11.1",
     "eslint-plugin-jest": "28.8.3",
-    "globals": "^15.10.0",
+    "globals": "^15.14.0",
     "husky": "9.1.6",
     "jest": "29.7.0",
     "restify": "^11.1.0",
