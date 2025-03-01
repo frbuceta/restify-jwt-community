@@ -51,7 +51,7 @@
     "@semantic-release/git": "10.0.1",
     "@types/restify-errors": "4.3.9",
     "cz-conventional-changelog": "3.3.0",
-    "eslint": "9.11.1",
+    "eslint": "9.21.0",
     "eslint-plugin-jest": "28.8.3",
     "globals": "^15.10.0",
     "husky": "9.1.6",
