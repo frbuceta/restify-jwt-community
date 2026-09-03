@@ -44,8 +44,8 @@
     "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "19.5.0",
-    "@commitlint/config-conventional": "19.5.0",
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1",
     "@eslint/js": "^9.11.1",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
